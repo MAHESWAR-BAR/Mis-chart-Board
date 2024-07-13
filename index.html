@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weekly Telemedicine MIS Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .firstHeader {
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .secondHeader {
+        display: flex;
+        justify-content: space-between;
+        color: black;
+        font-size: 20px;
+      }
+
+      .leftDiv {
+        height: 33rem;
+        width: 30rem;
+        text-align: center;
+        padding: 2rem;
+        box-shadow: 1px 1px 5px hsla(0, 1%, 27%, 0.304),
+          -1px -1px 5px hsla(0, 1%, 21%, 0.304);
+      }
+
+      .genderIcon img {
+        height: 13vh;
+        width: auto;
+        opacity: 0.9;
+      }
+
+      .genderIcon {
+        display: flex;
+        justify-content: space-evenly;
+        text-align: center;
+      }
+
+      .icon1 {
+        padding: 5px;
+        padding: 0px;
+        width: 8rem;
+        height: 9rem;
+        box-shadow: 1px 1px 5px hsla(0, 1%, 27%, 0.304),
+          -1px -1px 5px hsla(0, 1%, 21%, 0.304);
+      }
+
+      #icn {
+        margin-left: -2rem;
+        margin-top: 0rem;
+      }
+
+      #leftHederLine {
+        font-size: 20px;
+        background-color: hsla(0, 1%, 36%, 0.068);
+        padding: 0.5rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        border-radius: 7px;
+        margin-top: 0;
+      }
+
+      /* chart Container */
+      #chartContainer {
+        width: auto;
+        height: 9rem;
+        position: relative;
+      }
+
+      #leftSpan {
+        display: inline-block;
+        margin-left: -6rem;
+      }
+
+      #secondHeadearLine {
+        font-size: 25px;
+        background-color: hsla(0, 1%, 36%, 0.068);
+        padding-right: 3rem;
+        padding-left: 3rem;
+        border-radius: 7px;
+        padding: 0.4rem;
+      }
+
+      .legend-container {
+        display: inline-block;
+        align-items: center;
+        margin-top: 2px;
+        float: right;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+      }
+
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+      }
+
+      .legend-color.self {
+        background-color: #58dde8;
+      }
+
+      .legend-color.dependent {
+        background-color: #3d3d3d;
+      }
+
+      #belowNumber {
+        float: right;
+        margin-top: -2rem;
+        margin-left: -2rem;
+      }
+
+      .mainDiv {
+        display: flex;
+        flex-direction: row;
+      }
+
+      /*  */
+      .rightDivmain {
+        width: auto;
+        height: 100%;
+        border: 2px solid black;
+        margin-left: 1rem;
+      }
+
+      /* footer chart container */
+      .chart-container {
+        width: auto;
+        height: 14rem;
+        display: inline-block;
+        margin: auto;
+        margin-top: -2rem;
+        padding: 1rem;
+        display: flex;
+      }
+
+      .lastContainer {
+        height: 18rem;
+        width: 32rem;
+        text-align: center;
+        padding: 2rem;
+        box-shadow: 1px 1px 5px hsla(0, 1%, 27%, 0.304),
+          -1px -1px 5px hsla(0, 1%, 21%, 0.304);
+        margin-top: 1rem;
+      }
+
+      .contact-info {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #000000;
+        font-size: 20px;
+        font-weight: 600;
+        /* margin: 20px auto; */
+        width: 60%;
+        /* box-shadow: 1px 1px 5px hsla(0, 1%, 27%, 0.304), -1px -1px 5px hsla(0, 1%, 21%, 0.304); */
+        margin-top: 1rem;
+        margin-left: 1rem;
+        padding: 2rem;
+        padding-top: 5rem;
+      }
+
+      .contact-info ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .contact-info li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .contact-info i {
+        font-size: 1.5em;
+        margin-right: 10px;
+      }
+
+      /*  */
+      .chart-container1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60%;
+        margin: auto;
+      }
+
+      .chart-legend {
+        list-style-type: none;
+        padding: 0;
+        margin-left: 6rem;
+      }
+
+      .chart-legend li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+
+      .chart-legend span {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      .rightContainer {
+        margin-left: 1rem;
+        box-shadow: 1px 1px 5px hsla(0, 1%, 27%, 0.304),
+          -1px -1px 5px hsla(0, 1%, 21%, 0.304);
+      }
+
+      #rightDivHeaderLine {
+        font-size: 22px;
+        background-color: hsla(0, 1%, 36%, 0.068);
+        /* padding-right: 3rem; */
+        padding-left: 3rem;
+        border-radius: 7px;
+        padding: 0.4rem;
+        margin: auto;
+        margin-left: 3rem;
+        margin-right: 23rem;
+        font-weight: bold;
+        margin-top: 1rem;
+      }
+
+      /* #myDonutChart {
+
+            display: block;
+            box-sizing: border-box;
+            height: 400px !important;
+            width: auto !important;
+        } */
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="firstHeader">
+        <div><img src="" alt="clint logo" /></div>
+        <div>
+          <h2>Weekly Telemedicine MIS Report for ‘Client Name’</h2>
+        </div>
+        <div>
+          <img src="rectangle_7.png" style="height: 13vh; width: auto" />
+        </div>
+      </header>
+
+      <div class="secondHeader">
+        <p><b>Period:</b> ‘From Date’ - ‘To Date’</p>
+        <p><b>Total Calls:</b> ‘No. of total calls’</p>
+        <p><b>Unique Calls:</b> ‘No. of unique calls’</p>
+        <p><b>Repeated Calls:</b> ‘No. of repeated calls’</p>
+      </div>
+
+      <main class="mainDiv">
+        <div class="leftDiv">
+          <p id="leftHederLine">
+            <b>Total Mobile App Downloads:</b> ‘No. of downloads’
+          </p>
+          <div class="genderIcon">
+            <div class="icon1">
+              <img src="maleIcon.jpg" />
+              <p>49%</p>
+            </div>
+            <div class="icon1" id="icn">
+              <img src="FemaleIcone.avif" style="height: 16vh" />
+              <p style="margin-top: 0rem">51%</p>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <h4 id="secondHeadearLine">Breakdown Of Calls By Patient Type</h4>
+            </div>
+            <!-- 
+                    <span id="leftSpan">152
+                        <br>
+                        (42%)
+                    </span> -->
+            <!-- doted  -->
+            <div class="legend-container" id="last">
+              <div class="legend-item">
+                <div class="legend-color self"></div>
+                <span>Self</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color dependent"></div>
+                <span>Dependent</span>
+              </div>
+            </div>
+
+            <!-- left chart in the main body -->
+
+            <div id="chartContainer">
+              <canvas id="myChart"></canvas>
+              <!-- <p id="belowNumber">206<br> (58%)</p> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="rightContainer">
+          <p id="rightDivHeaderLine" style="margin-top: 2rem">
+            Breakdown of Telemedicine and Add on services
+          </p>
+          <div class="chart-container1">
+            <canvas id="myDonutChart"></canvas>
+            <ul class="chart-legend" id="chartLegend"></ul>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer" style="display: flex">
+        <div class="lastContainer">
+          <div class="legend-container" style="margin-top: 3rem">
+            <div class="legend-item">
+              <div class="legend-color self"></div>
+              <!-- <span>Age Range 1</span> -->
+            </div>
+            <div class="legend-item">
+              <div class="legend-color dependent"></div>
+              <!-- <span>Age Range 2</span> -->
+            </div>
+            <div class="legend-item">
+              <div class="legend-color self"></div>
+              <!-- <span>Age Range 3</span> -->
+            </div>
+          </div>
+          <div>
+            <h4 id="secondHeadearLine" style="margin-top: 0">
+              Breakdown Of Age Ranges
+            </h4>
+          </div>
+          <div class="chart-container">
+            <canvas id="myDoughnutChart" style="margin: auto"></canvas>
+            <pre
+              id="belowNumber"
+              style="font-size: 12px; font-weight: bold"
+            ></pre>
+          </div>
+        </div>
+        <div class="contact-info">
+          <ul>
+            <li><i class="fas fa-phone-alt"></i> +91 95551 66000</li>
+            <li><i class="fas fa-envelope"></i> wellness@raphacure.com</li>
+            <li><i class="fas fa-globe"></i> raphacure.com</li>
+            <li>
+              <i class="fas fa-map-marker-alt"></i> 38/3, 6th Cross, Vibgyor
+              High School Road, opp. Thomas Square, HSR Extension, Reliable
+              Tranquil Layout, Bengaluru, Karnataka-560102
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <!-- JAVASCRIPT START -->
+    <script>
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Self: 152 (42%)", "Dependent: 206 (58%)"],
+          datasets: [
+            {
+              data: [152, 206],
+              backgroundColor: ["#58DDE8", "#3D3D3D"],
+              hoverBackgroundColor: ["#58DDE8", "#3D3D3D"],
+              borderWidth: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  var label = tooltipItem.label || "";
+                  var value = tooltipItem.raw;
+                  return label + ": " + value;
+                },
+              },
+            },
+          },
+          cutout: "70%",
+          rotation: Math.PI / 2,
+        },
+      });
+
+      // second chart for footer
+      var ctx = document.getElementById("myDoughnutChart").getContext("2d");
+      var myDoughnutChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Age Range 1", "Age Range 2", "Age Range 3"],
+          datasets: [
+            {
+              data: [40, 30, 30],
+              backgroundColor: ["#3ec6e0", "#3a3e42", "#8ce7f0"],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  var label = tooltipItem.label || "";
+                  var value = tooltipItem.raw;
+                  return label + ": " + value;
+                },
+              },
+            },
+          },
+        },
+      });
+
+      //
+
+      const labels = [
+        "GP Consultant ",
+        "Working Men Package",
+        "Silver Package",
+        "Pharmacy",
+        "Vision Consultation",
+        "Basic Package",
+        "Save my Heart plus",
+        "Dental Consultations",
+        "Top-Up Package 1",
+        "Health 360 Package",
+        "Counselling(EAP)Top-Up",
+        "Package 2USG",
+        "Sono Mamography",
+        "USG Abdomen & Pelvis",
+      ];
+      const data = [5, 50, 50, 1, 10, 150, 70, 21, 30, 30, 20, 15, 15, 15];
+      const backgroundColors = [
+        "#2D8BBA",
+        "#2F5F98",
+        "#31356E",
+        "#41B8D5",
+        "#6CE5E8",
+        "#704E85",
+        "#A66C98",
+        "#D690AA",
+        "#FFB9BD",
+        "#31356E",
+        "#6CE5E8",
+        "#704E85",
+        "#A66C98",
+        "#D690AA",
+      ];
+
+      const ctx2 = document.getElementById("myDonutChart").getContext("2d");
+      const myDonutChart = new Chart(ctx2, {
+        type: "doughnut",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              data: data,
+              backgroundColor: backgroundColors,
+              borderWidth: 0, // Remove white lines
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false, // Allow chart to scale freely
+          plugins: {
+            legend: {
+              display: false, // Disable default legend
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.label + " (" + tooltipItem.raw + "%)";
+                },
+              },
+            },
+          },
+          layout: {
+            padding: {
+              left: 20,
+              right: 20,
+              top: 20,
+              bottom: 20,
+            },
+          },
+          elements: {
+            arc: {
+              borderWidth: 0, // Remove border from arcs
+            },
+          },
+        },
+      });
+
+      // Generate custom legend
+      const legend = document.getElementById("chartLegend");
+      labels.forEach((label, index) => {
+        const li = document.createElement("li");
+        const colorBox = document.createElement("span");
+        colorBox.style.backgroundColor = backgroundColors[index];
+        li.appendChild(colorBox);
+        li.appendChild(document.createTextNode(`${label} (${data[index]}%)`)); // Correct usage of backticks
+        legend.appendChild(li);
+      });
+    </script>
+  </body>
+</html>
